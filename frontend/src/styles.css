@@ -1,0 +1,562 @@
+:root {
+  --bubblegum: #ff6fa3;
+  --plum: #3d0c3f;
+  --ice: #ffe9f2;
+  --mint: #bff3dc;
+  --lemon: #fff1a8;
+  --stamp: #c40037;
+  --candy: #ffc2da;
+  --display: "Bagel Fat One", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body: "Commissioner", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bubblegum);
+  color: var(--plum);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.clip-defs {
+  position: absolute;
+}
+
+/* Three columns. The bench is last in the markup but sits in the middle. */
+.court {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 1.1fr) minmax(0, 1fr);
+  grid-template-areas: "boy bench girl";
+  column-gap: clamp(16px, 2.5vw, 40px);
+  align-items: stretch;
+  min-height: 100vh;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 2.5vw, 40px);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 0;
+}
+
+.side--boy {
+  grid-area: boy;
+}
+
+.side--girl {
+  grid-area: girl;
+}
+
+/* The photos: two halves of one heart, cracked edges facing the bench. */
+.heart {
+  position: relative;
+  width: min(100%, 300px);
+  transition: transform 700ms cubic-bezier(0.3, 1.5, 0.5, 1), filter 700ms ease;
+  filter: drop-shadow(7px 7px 0 var(--plum));
+}
+
+.heart--boy {
+  align-self: flex-end;
+  transform-origin: bottom right;
+}
+
+.heart--girl {
+  align-self: flex-start;
+  transform-origin: bottom left;
+}
+
+.heart__shape {
+  aspect-ratio: 5 / 6;
+}
+
+.heart--boy .heart__shape {
+  clip-path: url(#heart-left);
+}
+
+.heart--girl .heart__shape {
+  clip-path: url(#heart-right);
+}
+
+.heart img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heart--boy img {
+  object-position: 62% 100%;
+}
+
+.heart--girl img {
+  object-position: 40% 25%;
+}
+
+.heart--win {
+  transform: scale(1.06) translateY(-6px);
+}
+
+.heart--lose {
+  filter: grayscale(1) drop-shadow(4px 4px 0 var(--plum));
+}
+
+.heart--boy.heart--lose {
+  transform: rotate(-9deg) translateY(14px);
+}
+
+.heart--girl.heart--lose {
+  transform: rotate(9deg) translateY(14px);
+}
+
+.heart__stamp {
+  position: absolute;
+  top: 8px;
+  padding: 2px 16px;
+  border-radius: 999px;
+  border: 3px solid var(--plum);
+  background: var(--candy);
+  color: var(--stamp);
+  font-family: var(--display);
+  font-size: 1.5rem;
+  transform: rotate(-8deg);
+  animation: pop 450ms 250ms backwards cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.heart--boy .heart__stamp {
+  left: -6px;
+}
+
+.heart--girl .heart__stamp {
+  right: -6px;
+  transform: rotate(8deg);
+}
+
+.heart--lose .heart__stamp {
+  background: var(--ice);
+  color: var(--plum);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 3px solid var(--plum);
+  border-radius: 28px;
+  box-shadow: 7px 7px 0 var(--plum);
+}
+
+.side--boy .panel {
+  background: var(--mint);
+}
+
+.side--girl .panel {
+  background: var(--lemon);
+}
+
+.panel__title {
+  font-family: var(--display);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  width: 100%;
+  padding: 12px 14px;
+  border: 3px solid var(--plum);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--plum);
+  font: inherit;
+  resize: vertical;
+}
+
+.field::placeholder {
+  color: #7b5a7c;
+}
+
+.field:disabled {
+  opacity: 0.6;
+}
+
+.count {
+  font-size: 0.875rem;
+}
+
+.side-error {
+  font-weight: 700;
+  color: var(--stamp);
+}
+
+.sealed {
+  padding: 16px;
+  border: 3px dashed var(--plum);
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.record {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #fff;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.record__question {
+  margin-bottom: 6px;
+  font-style: italic;
+  font-size: 0.9375rem;
+}
+
+.btn {
+  align-self: flex-start;
+  padding: 10px 22px;
+  border: 3px solid var(--plum);
+  border-radius: 999px;
+  background: var(--plum);
+  color: var(--ice);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 90ms ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.btn:disabled {
+  background: transparent;
+  color: var(--plum);
+  cursor: not-allowed;
+}
+
+.btn--light {
+  align-self: center;
+  border-color: var(--candy);
+  background: var(--candy);
+  color: var(--plum);
+}
+
+/* Without this, a disabled light button is plum text on the plum background. */
+.btn--light:disabled {
+  border-color: var(--candy);
+  background: transparent;
+  color: var(--candy);
+  opacity: 0.7;
+}
+
+:focus-visible {
+  outline: 3px solid var(--stamp);
+  outline-offset: 2px;
+}
+
+.bench :focus-visible {
+  outline-color: var(--lemon);
+}
+
+/* The bench: a plum slab standing in the crack of the heart. */
+.bench {
+  grid-area: bench;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 40px clamp(20px, 2.5vw, 40px) 24px;
+  background: var(--plum);
+  color: var(--ice);
+}
+
+.bench > [aria-live] {
+  flex: 1;
+}
+
+.bench__title {
+  font-family: var(--display);
+  font-size: clamp(3.25rem, 6.2vw, 6rem);
+  font-weight: 400;
+  line-height: 0.95;
+  text-align: center;
+  color: var(--bubblegum);
+}
+
+.bench__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 62ch;
+  margin: 0 auto;
+}
+
+.bench__body--center {
+  align-items: center;
+  padding-top: 32px;
+  text-align: center;
+}
+
+.bench__lead {
+  font-size: 1.375rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.bench__hint {
+  text-align: center;
+  color: var(--candy);
+}
+
+.bench__round {
+  font-family: var(--display);
+  font-size: 1.75rem;
+  text-align: center;
+  color: var(--candy);
+}
+
+.bench__heading {
+  font-family: var(--display);
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: var(--candy);
+}
+
+.question {
+  padding: 14px 16px;
+  border-radius: 18px;
+  color: var(--plum);
+  overflow-wrap: anywhere;
+}
+
+.question--boy {
+  background: var(--mint);
+}
+
+.question--girl {
+  background: var(--lemon);
+}
+
+.question__for {
+  font-weight: 700;
+}
+
+.safety__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.candy {
+  position: relative;
+  width: min(100%, 300px);
+  margin: 0 auto 4px;
+  animation: stamp 520ms cubic-bezier(0.25, 1.5, 0.5, 1) backwards;
+}
+
+.candy__heart {
+  display: block;
+  width: 100%;
+  fill: var(--candy);
+}
+
+.candy__text {
+  position: absolute;
+  inset: 0 0 12% 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-size: 2.5rem;
+  line-height: 1;
+  text-align: center;
+  color: var(--stamp);
+  transform: rotate(-5deg);
+}
+
+.beat {
+  width: 84px;
+  fill: var(--bubblegum);
+  animation: beat 900ms ease-in-out infinite;
+}
+
+.bench__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.linkish {
+  border: 0;
+  background: none;
+  color: var(--ice);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.disclaimer {
+  font-size: 0.875rem;
+  color: var(--candy);
+}
+
+.bench__error {
+  font-weight: 700;
+  text-align: center;
+  color: var(--lemon);
+}
+
+.seats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.invite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border: 3px dashed var(--candy);
+  border-radius: 18px;
+}
+
+.invite__link {
+  width: 100%;
+  padding: 8px 12px;
+  border: 3px solid var(--candy);
+  border-radius: 10px;
+  background: var(--ice);
+  color: var(--plum);
+  font: inherit;
+  font-size: 0.875rem;
+}
+
+/* The screens before or instead of the court: passcode, loading, "this case is over". */
+.splash {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.splash__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(100%, 420px);
+  padding: 32px 28px;
+  border-radius: 28px;
+  background: var(--plum);
+  color: var(--ice);
+  box-shadow: 7px 7px 0 rgba(61, 12, 63, 0.35);
+}
+
+.splash__title {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 9vw, 3.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  text-align: center;
+  color: var(--bubblegum);
+}
+
+.splash__text {
+  text-align: center;
+}
+
+.splash__beat {
+  align-self: center;
+}
+
+.splash .btn {
+  align-self: center;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    scale: 2.2;
+  }
+}
+
+@keyframes beat {
+  50% {
+    scale: 1.18;
+  }
+}
+
+/* Stack the columns on narrow screens. */
+@media (max-width: 960px) {
+  .court {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px 24px;
+  }
+
+  .heart {
+    width: min(70%, 260px);
+    align-self: center;
+  }
+
+  .bench {
+    order: 0;
+    margin: 0 -16px;
+    gap: 20px;
+    padding-top: 28px;
+  }
+
+  /* The lawyer first, then whoever is holding this phone, then the other person. */
+  .side {
+    order: 2;
+    padding: 16px 0;
+  }
+
+  .side--mine {
+    order: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,13 @@
+# Keeps secrets, the original photos and local clutter out of the build.
+.git
+.env
+**/.env
+pictures
+**/node_modules
+**/.venv
+**/dist
+**/__pycache__
+**/.pytest_cache
+.playwright-mcp
+backend/tests
+*.md

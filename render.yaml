@@ -1,0 +1,16 @@
+# Render Blueprint: one web service built from the Dockerfile in this folder.
+# ANTHROPIC_API_KEY and ACCESS_PASSCODE are asked for in the Render dashboard when the
+# Blueprint is created. They are never stored in this file.
+services:
+  - type: web
+    runtime: docker
+    name: love-on-trial
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ACCESS_PASSCODE
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true

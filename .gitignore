@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+dist/
+.DS_Store
+# The original photos. One has a GPS location in it, so it must never be committed.
+# The app uses the cleaned copies in backend/app/assets/.
+pictures/
+.playwright-mcp/
